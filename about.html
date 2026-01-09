@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | PDF Tools Pro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <!-- Navigation -->
+    <div id="navigation-container"></div>
+    
+    <div class="container">
+        <header>
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-info-circle"></i>
+                </div>
+                <h1>About PDF Tools Pro</h1>
+            </div>
+            <p class="tagline">Learn more about our mission to provide free, secure, and privacy-focused PDF tools</p>
+        </header>
+        
+        <main>
+            <div class="app-card">
+                <div class="card-body">
+                    <div class="about-content">
+                        <h2>Our Mission</h2>
+                        <p>PDF Tools Pro was created with a simple mission: to provide free, high-quality PDF conversion tools that respect your privacy. We believe that everyone should have access to essential PDF tools without compromising their data security.</p>
+                        
+                        <h2>Why We're Different</h2>
+                        <div class="features">
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-lock"></i>
+                                </div>
+                                <h3>100% Private</h3>
+                                <p>All processing happens locally in your browser. Your files never leave your computer or get uploaded to our servers.</p>
+                            </div>
+                            
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-dollar-sign"></i>
+                                </div>
+                                <h3>Completely Free</h3>
+                                <p>No subscriptions, no hidden fees, no watermarks. All our tools are free to use now and forever.</p>
+                            </div>
+                            
+                            <div class="feature-card">
+                                <div class="feature-icon">
+                                    <i class="fas fa-code"></i>
+                                </div>
+                                <h3>Open Source</h3>
+                                <p>Our code is open for inspection and contribution. Transparency builds trust in our tools.</p>
+                            </div>
+                        </div>
+                        
+                        <h2>How It Works</h2>
+                        <p>PDF Tools Pro uses modern web technologies to process files entirely in your browser:</p>
+                        <ul class="feature-list">
+                            <li><strong>PDF.js:</strong> For reading and rendering PDF files</li>
+                            <li><strong>jsPDF:</strong> For creating PDF documents from images</li>
+                            <li><strong>JSZip:</strong> For creating ZIP archives</li>
+                            <li><strong>Canvas API:</strong> For image processing and conversion</li>
+                        </ul>
+                        
+                        <h2>Technology Stack</h2>
+                        <div class="tech-stack">
+                            <div class="tech-item">
+                                <i class="fab fa-html5" style="color: #e34f26;"></i>
+                                <span>HTML5</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fab fa-css3-alt" style="color: #1572b6;"></i>
+                                <span>CSS3</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fab fa-js" style="color: #f7df1e;"></i>
+                                <span>JavaScript</span>
+                            </div>
+                            <div class="tech-item">
+                                <i class="fas fa-file-pdf" style="color: #ff0000;"></i>
+                                <span>PDF.js</span>
+                            </div>
+                        </div>
+                        
+                        <h2>Contact</h2>
+                        <p>Have questions or suggestions? We'd love to hear from you!</p>
+                        <div class="contact-info">
+                            <a href="contact.html" class="btn">
+                                <i class="fas fa-envelope"></i> Contact Us
+                            </a>
+                            <a href="https://github.com" target="_blank" class="btn btn-secondary">
+                                <i class="fab fa-github"></i> GitHub Repository
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- Footer -->
+    <div id="footer-container"></div>
+    
+    <script>
+        // Load navigation
+        fetch('components/navigation.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('navigation-container').innerHTML = data;
+            });
+        
+        // Load footer
+        fetch('components/footer.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('footer-container').innerHTML = data;
+            });
+    </script>
+</body>
+</html>

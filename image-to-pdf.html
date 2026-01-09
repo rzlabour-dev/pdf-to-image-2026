@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image to PDF Converter | Smart Export</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <!-- Navigation will be loaded here -->
+    <div id="navigation-container"></div>
+    
+    <div class="container">
+        <header>
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-file-image"></i>
+                </div>
+                <h1>Image to PDF Converter</h1>
+            </div>
+            <p class="tagline">Convert multiple images to a single PDF file. Organize, resize, and export images as a professional PDF document.</p>
+        </header>
+
+        <main>
+            <div class="app-card">
+                <div class="card-header">
+                    <h2>Upload & Convert Images</h2>
+                    <p>Drag and drop or click to select multiple image files</p>
+                </div>
+                
+                <div class="card-body">
+                    <div class="upload-area" id="dropArea">
+                        <div class="upload-icon">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                        </div>
+                        <p class="upload-text">Drag & Drop your images here</p>
+                        <p class="upload-subtext">or click to browse files (JPG, PNG, WebP supported)</p>
+                        <button class="btn" id="browseBtn">Browse Images</button>
+                        <input type="file" id="fileInput" class="file-input" accept="image/*" multiple>
+                    </div>
+
+                    <div class="option-group">
+                        <div class="option">
+                            <label for="pageSize">Page Size:</label>
+                            <select id="pageSize">
+                                <option value="a4">A4 (210×297mm)</option>
+                                <option value="letter" selected>Letter (8.5×11in)</option>
+                                <option value="legal">Legal (8.5×14in)</option>
+                                <option value="auto">Auto Fit</option>
+                            </select>
+                        </div>
+                        
+                        <div class="option">
+                            <label for="orientation">Orientation:</label>
+                            <select id="orientation">
+                                <option value="portrait" selected>Portrait</option>
+                                <option value="landscape">Landscape</option>
+                                <option value="auto">Auto</option>
+                            </select>
+                        </div>
+                        
+                        <div class="option">
+                            <label for="margin">Margin:</label>
+                            <select id="margin">
+                                <option value="10">Small (10mm)</option>
+                                <option value="20" selected>Medium (20mm)</option>
+                                <option value="30">Large (30mm)</option>
+                                <option value="0">None</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="option-group">
+                        <div class="option">
+                            <label for="imageOrder">
+                                <input type="checkbox" id="imageOrder" checked>
+                                Keep original order
+                            </label>
+                        </div>
+                        
+                        <div class="option">
+                            <label for="compressImages">
+                                <input type="checkbox" id="compressImages" checked>
+                                Compress images
+                            </label>
+                        </div>
+                        
+                        <div class="option">
+                            <label for="addPageNumbers">
+                                <input type="checkbox" id="addPageNumbers">
+                                Add page numbers
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="controls">
+                        <button class="btn" id="sortBtn" disabled>
+                            <i class="fas fa-sort"></i> Sort Images
+                        </button>
+                        <button class="btn" id="convertBtn" disabled>
+                            <i class="fas fa-cogs"></i> Convert to PDF
+                        </button>
+                        <button class="btn btn-secondary" id="clearBtn" disabled>
+                            <i class="fas fa-trash-alt"></i> Clear All
+                        </button>
+                    </div>
+
+                    <div class="loading hidden" id="loading">
+                        <div class="spinner"></div>
+                        <p>Creating PDF... This may take a moment</p>
+                        <p><small id="loadingStatus">Processing images...</small></p>
+                    </div>
+
+                    <div class="stats hidden" id="stats">
+                        <div class="stat-item">
+                            <div class="stat-value" id="imageCount">0</div>
+                            <div class="stat-label">Total Images</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="totalSize">0 MB</div>
+                            <div class="stat-label">Total Size</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="pdfPages">0</div>
+                            <div class="stat-label">PDF Pages</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="status">Ready</div>
+                            <div class="stat-label">Status</div>
+                        </div>
+                    </div>
+
+                    <div class="preview-section hidden" id="previewSection">
+                        <div class="preview-header">
+                            <h3>Image Preview & Order</h3>
+                            <div>
+                                <button class="btn btn-success" id="downloadBtn">
+                                    <i class="fas fa-download"></i> Download PDF
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="preview-container sortable" id="previewContainer">
+                            <!-- Preview images will be inserted here -->
+                        </div>
+                        
+                        <div class="preview-actions">
+                            <button class="btn" id="removeAllBtn">
+                                <i class="fas fa-times"></i> Remove All
+                            </button>
+                            <button class="btn btn-secondary" id="reorderBtn">
+                                <i class="fas fa-random"></i> Apply Order
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-layer-group"></i>
+                    </div>
+                    <h3>Multi-Image Support</h3>
+                    <p>Combine multiple images into a single PDF document. Supports JPG, PNG, WebP, and other formats.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-sort-alpha-down"></i>
+                    </div>
+                    <h3>Drag & Drop Sorting</h3>
+                    <p>Reorder images easily with drag and drop interface before creating your PDF document.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-crop-alt"></i>
+                    </div>
+                    <h3>Smart Formatting</h3>
+                    <p>Automatically adjusts image sizes to fit selected page format while maintaining quality.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- Footer will be loaded here -->
+    <div id="footer-container"></div>
+
+    <!-- External Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
+    
+    <!-- Load components -->
+    <script>
+        // Load navigation
+        fetch('components/navigation.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('navigation-container').innerHTML = data;
+            });
+        
+        // Load footer
+        fetch('components/footer.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('footer-container').innerHTML = data;
+            });
+    </script>
+    
+    <!-- Main JavaScript -->
+    <script src="image-to-pdf.js" defer></script>
+</body>
+</html>

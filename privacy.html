@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy | PDF Tools Pro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <div id="navigation-container"></div>
+    
+    <div class="container">
+        <header>
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h1>Privacy Policy</h1>
+            </div>
+            <p class="tagline">Your privacy is our top priority. Learn how we protect your data.</p>
+        </header>
+        
+        <main>
+            <div class="app-card">
+                <div class="card-body">
+                    <div class="policy-content">
+                        <div class="policy-highlight">
+                            <i class="fas fa-lock"></i>
+                            <h3>No Data Collection</h3>
+                            <p>We do not collect, store, or process any of your files on our servers.</p>
+                        </div>
+                        
+                        <h2>How We Protect Your Privacy</h2>
+                        <p>PDF Tools Pro is designed with privacy as the core principle:</p>
+                        
+                        <div class="privacy-features">
+                            <div class="privacy-item">
+                                <i class="fas fa-desktop"></i>
+                                <div>
+                                    <h4>Local Processing</h4>
+                                    <p>All file conversions happen locally in your browser using JavaScript. Your files never leave your computer.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="privacy-item">
+                                <i class="fas fa-server"></i>
+                                <div>
+                                    <h4>No Server Uploads</h4>
+                                    <p>We don't have a backend server to upload files to. The entire application runs client-side.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="privacy-item">
+                                <i class="fas fa-cookie"></i>
+                                <div>
+                                    <h4>Minimal Cookies</h4>
+                                    <p>We use only essential cookies for site functionality. No tracking cookies are used.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="privacy-item">
+                                <i class="fas fa-analytics"></i>
+                                <div>
+                                    <h4>Anonymous Analytics</h4>
+                                    <p>If we use analytics, they're anonymized and don't collect personal information.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h2>Information We Don't Collect</h2>
+                        <ul>
+                            <li><strong>Files:</strong> We never see, store, or have access to your uploaded files</li>
+                            <li><strong>Personal Information:</strong> We don't require accounts or personal details</li>
+                            <li><strong>Usage Data:</strong> We don't track which files you convert or when</li>
+                            <li><strong>IP Addresses:</strong> When hosted on static platforms, they may log IPs, but we don't</li>
+                        </ul>
+                        
+                        <h2>Third-Party Services</h2>
+                        <p>We use the following third-party services:</p>
+                        <ul>
+                            <li><strong>CDN Services:</strong> For loading libraries (pdf.js, JSZip, etc.)</li>
+                            <li><strong>Font Awesome:</strong> For icons</li>
+                            <li><strong>Hosting Platforms:</strong> GitHub Pages, Vercel, or Netlify for hosting</li>
+                        </ul>
+                        
+                        <h2>Your Rights</h2>
+                        <p>You have the right to:</p>
+                        <ul>
+                            <li>Use our tools anonymously</li>
+                            <li>Inspect our source code (it's open source)</li>
+                            <li>Download and run the tools offline</li>
+                            <li>Request deletion of any data (though we don't collect any)</li>
+                        </ul>
+                        
+                        <h2>Contact</h2>
+                        <p>If you have any questions about our privacy policy, please contact us.</p>
+                        
+                        <div class="policy-actions">
+                            <a href="index.html" class="btn">
+                                <i class="fas fa-home"></i> Back to Home
+                            </a>
+                            <a href="contact.html" class="btn btn-secondary">
+                                <i class="fas fa-envelope"></i> Contact Us
+                            </a>
+                        </div>
+                        
+                        <div class="policy-update">
+                            <p><strong>Last Updated:</strong> December 2023</p>
+                            <p>This policy may be updated occasionally. We recommend checking back periodically.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <div id="footer-container"></div>
+    
+    <script>
+        fetch('components/navigation.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('navigation-container').innerHTML = data;
+            });
+        
+        fetch('components/footer.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('footer-container').innerHTML = data;
+            });
+    </script>
+</body>
+</html>

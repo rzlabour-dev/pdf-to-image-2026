@@ -1,0 +1,85 @@
+<nav class="navbar">
+    <a href="index.html" class="nav-brand">
+        <div class="logo-icon">
+            <i class="fas fa-tools"></i>
+        </div>
+        <span>PDF Tools Pro</span>
+    </a>
+    
+    <div class="nav-toggle" id="navToggle">
+        <i class="fas fa-bars"></i>
+    </div>
+    
+    <ul class="nav-menu" id="navMenu">
+        <li><a href="index.html" class="nav-link">
+            <i class="fas fa-home"></i> Home
+        </a></li>
+        <li class="dropdown">
+            <a href="#" class="nav-link dropdown-toggle">
+                <i class="fas fa-tools"></i> Tools <i class="fas fa-chevron-down"></i>
+            </a>
+            <div class="dropdown-menu">
+                <a href="pdf-to-images.html" class="dropdown-item">
+                    <i class="fas fa-file-pdf"></i> PDF to Images
+                </a>
+                <a href="image-to-pdf.html" class="dropdown-item">
+                    <i class="fas fa-file-image"></i> Images to PDF
+                </a>
+            </div>
+        </li>
+        <li><a href="about.html" class="nav-link">
+            <i class="fas fa-info-circle"></i> About
+        </a></li>
+        <li><a href="privacy.html" class="nav-link">
+            <i class="fas fa-shield-alt"></i> Privacy
+        </a></li>
+        <li><a href="terms.html" class="nav-link">
+            <i class="fas fa-file-contract"></i> Terms
+        </a></li>
+        <li><a href="contact.html" class="nav-link">
+            <i class="fas fa-envelope"></i> Contact
+        </a></li>
+    </ul>
+    
+    <div class="nav-actions">
+        <a href="https://github.com" target="_blank" class="github-btn">
+            <i class="fab fa-github"></i> Star
+        </a>
+    </div>
+</nav>
+
+<script>
+    // Mobile navigation toggle
+    document.addEventListener('DOMContentLoaded', function() {
+        const navToggle = document.getElementById('navToggle');
+        const navMenu = document.getElementById('navMenu');
+        
+        if (navToggle && navMenu) {
+            navToggle.addEventListener('click', function() {
+                navMenu.classList.toggle('active');
+                navToggle.classList.toggle('active');
+            });
+            
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!navToggle.contains(e.target) && !navMenu.contains(e.target)) {
+                    navMenu.classList.remove('active');
+                    navToggle.classList.remove('active');
+                }
+            });
+        }
+        
+        // Set active link based on current page
+        const currentPage = window.location.pathname.split('/').pop();
+        const navLinks = document.querySelectorAll('.nav-link');
+        
+        navLinks.forEach(link => {
+            const linkHref = link.getAttribute('href');
+            if (linkHref === currentPage || 
+                (currentPage === '' && linkHref === 'index.html') ||
+                (currentPage.includes('index') && linkHref === 'index.html')) {
+                link.classList.add('active');
+            }
+        });
+    });
+</script>

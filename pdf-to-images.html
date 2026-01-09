@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF to Image Converter | Smart Export</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <!-- Navigation will be loaded here -->
+    <div id="navigation-container"></div>
+    
+    <div class="container">
+        <header>
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-file-pdf"></i>
+                </div>
+                <h1>PDF to Image Converter</h1>
+            </div>
+            <p class="tagline">Convert PDF files to images with intelligent export. Single page files download as JPG, multi-page files as ZIP.</p>
+        </header>
+
+        <main>
+            <div class="app-card">
+                <div class="card-header">
+                    <h2>Upload & Convert PDF</h2>
+                    <p>Drag and drop or click to select your PDF file</p>
+                </div>
+                
+                <div class="card-body">
+                    <div class="upload-area" id="dropArea">
+                        <div class="upload-icon">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                        </div>
+                        <p class="upload-text">Drag & Drop your PDF file here</p>
+                        <p class="upload-subtext">or click to browse files</p>
+                        <button class="btn" id="browseBtn">Browse PDF Files</button>
+                        <input type="file" id="fileInput" class="file-input" accept=".pdf">
+                    </div>
+
+                    <div class="option-group">
+                        <div class="option">
+                            <label for="imageFormat">Image Format:</label>
+                            <select id="imageFormat">
+                                <option value="jpg">JPG (Default)</option>
+                                <option value="png">PNG</option>
+                                <option value="webp">WebP</option>
+                            </select>
+                        </div>
+                        
+                        <div class="option">
+                            <label for="imageQuality">Quality:</label>
+                            <select id="imageQuality">
+                                <option value="1.0">High (100%)</option>
+                                <option value="0.9" selected>Good (90%)</option>
+                                <option value="0.8">Medium (80%)</option>
+                                <option value="0.7">Low (70%)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="option">
+                            <label for="resolution">Resolution:</label>
+                            <select id="resolution">
+                                <option value="1">Standard (1x)</option>
+                                <option value="1.5" selected>High (1.5x)</option>
+                                <option value="2">Very High (2x)</option>
+                                <option value="3">Ultra (3x)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="controls">
+                        <button class="btn" id="convertBtn" disabled>
+                            <i class="fas fa-cogs"></i> Convert PDF to Images
+                        </button>
+                        <button class="btn btn-secondary" id="clearBtn" disabled>
+                            <i class="fas fa-trash-alt"></i> Clear All
+                        </button>
+                    </div>
+
+                    <div class="loading hidden" id="loading">
+                        <div class="spinner"></div>
+                        <p>Processing PDF... This may take a moment</p>
+                        <p><small id="loadingStatus">Loading PDF document...</small></p>
+                    </div>
+
+                    <div class="stats hidden" id="stats">
+                        <div class="stat-item">
+                            <div class="stat-value" id="pageCount">0</div>
+                            <div class="stat-label">Total Pages</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="fileSize">0 MB</div>
+                            <div class="stat-label">PDF Size</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="exportType">-</div>
+                            <div class="stat-label">Export Type</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="status">Ready</div>
+                            <div class="stat-label">Status</div>
+                        </div>
+                    </div>
+
+                    <div class="preview-section hidden" id="previewSection">
+                        <div class="preview-header">
+                            <h3>PDF Preview & Export</h3>
+                            <div>
+                                <button class="btn btn-success" id="downloadBtn">
+                                    <i class="fas fa-download"></i> Download All Images
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="preview-container" id="previewContainer">
+                            <!-- Preview images will be inserted here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>Fast Processing</h3>
+                    <p>Convert PDF pages to images quickly using client-side processing. No file uploads to external servers.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3>Smart Export</h3>
+                    <p>Automatically exports single page PDFs as JPG files and multi-page PDFs as ZIP archives for convenience.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Privacy Focused</h3>
+                    <p>All processing happens in your browser. Your files never leave your computer, ensuring complete privacy.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- Footer will be loaded here -->
+    <div id="footer-container"></div>
+
+    <!-- External Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    
+    <!-- Load components -->
+    <script>
+        // Load navigation
+        fetch('components/navigation.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('navigation-container').innerHTML = data;
+            });
+        
+        // Load footer
+        fetch('components/footer.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('footer-container').innerHTML = data;
+            });
+    </script>
+    
+    <!-- Main JavaScript -->
+    <script src="script.js" defer></script>
+</body>
+</html>

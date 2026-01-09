@@ -1,0 +1,73 @@
+<footer class="footer">
+    <div class="footer-content">
+        <div class="footer-main">
+            <div class="footer-logo">
+                <div class="logo-icon small">
+                    <i class="fas fa-file-pdf"></i>
+                </div>
+                <div class="footer-brand">
+                    <h3>PDF Tools Pro</h3>
+                    <p>Free, secure PDF tools that work in your browser</p>
+                </div>
+            </div>
+            
+            <div class="footer-links">
+                <div class="link-group">
+                    <h4>Tools</h4>
+                    <a href="pdf-to-images.html">PDF to Images</a>
+                    <a href="image-to-pdf.html">Images to PDF</a>
+                </div>
+                <div class="link-group">
+                    <h4>Legal</h4>
+                    <a href="privacy.html">Privacy Policy</a>
+                    <a href="terms.html">Terms of Service</a>
+                </div>
+                <div class="link-group">
+                    <h4>Company</h4>
+                    <a href="about.html">About Us</a>
+                    <a href="contact.html">Contact</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <div class="footer-tech">
+                <p>Built with <i class="fas fa-heart" style="color: #f72585;"></i> using HTML, CSS & JavaScript</p>
+                <p>Compatible with Vercel, GitHub Pages & Netlify</p>
+            </div>
+            
+            <div class="footer-actions">
+                <a href="https://github.com" target="_blank" class="github-link">
+                    <i class="fab fa-github"></i> View on GitHub
+                </a>
+                <a href="#" id="resetApp" class="reset-link">
+                    <i class="fas fa-redo"></i> Reset Application
+                </a>
+            </div>
+            
+            <div class="footer-copyright">
+                <p>&copy; <span id="currentYear">2023</span> PDF Tools Pro. All rights reserved.</p>
+                <p class="disclaimer">Uses pdf.js for PDF processing and JSZip for ZIP creation. All processing happens locally in your browser.</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Set current year in copyright
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
+    
+    // Reset app functionality
+    document.getElementById('resetApp')?.addEventListener('click', function(e) {
+        e.preventDefault();
+        if (typeof resetApp === 'function') {
+            resetApp();
+        } else if (window.location.pathname.includes('pdf-to-images')) {
+            window.location.href = 'pdf-to-images.html';
+        } else if (window.location.pathname.includes('image-to-pdf')) {
+            window.location.href = 'image-to-pdf.html';
+        } else {
+            window.location.reload();
+        }
+    });
+</script>
