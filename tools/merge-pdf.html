@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merge PDF Files | Combine Multiple PDFs</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="icon" href="../assets/images/favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <!-- Navigation will be loaded here -->
+    <div id="navigation-container"></div>
+    
+    <div class="container">
+        <header>
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-file-pdf"></i>
+                </div>
+                <h1>Merge PDF Files</h1>
+            </div>
+            <p class="tagline">Combine multiple PDF documents into one single file. Reorder pages and customize the output.</p>
+        </header>
+
+        <main>
+            <div class="app-card">
+                <div class="card-header">
+                    <h2>Upload & Merge PDFs</h2>
+                    <p>Drag and drop or click to select multiple PDF files</p>
+                </div>
+                
+                <div class="card-body">
+                    <div class="upload-area" id="dropArea">
+                        <div class="upload-icon">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                        </div>
+                        <p class="upload-text">Drag & Drop your PDFs here</p>
+                        <p class="upload-subtext">or click to browse files (PDF format only)</p>
+                        <button class="btn" id="browseBtn">Browse PDFs</button>
+                        <input type="file" id="fileInput" class="file-input" accept=".pdf,application/pdf" multiple>
+                    </div>
+
+                    <div class="option-group">
+                        <div class="option">
+                            <label for="outputQuality">Output Quality:</label>
+                            <select id="outputQuality">
+                                <option value="high" selected>High Quality</option>
+                                <option value="medium">Medium Quality</option>
+                                <option value="low">Small File Size</option>
+                            </select>
+                        </div>
+                        
+                        <div class="option">
+                            <label for="pageRotation">Page Rotation:</label>
+                            <select id="pageRotation">
+                                <option value="auto" selected>Auto</option>
+                                <option value="portrait">Force Portrait</option>
+                                <option value="landscape">Force Landscape</option>
+                                <option value="none">No Rotation</option>
+                            </select>
+                        </div>
+                        
+                        <div class="option">
+                            <label for="metadata">Preserve Metadata:</label>
+                            <select id="metadata">
+                                <option value="all" selected>All Metadata</option>
+                                <option value="none">No Metadata</option>
+                                <option value="title-only">Title Only</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="option-group">
+                        <div class="option">
+                            <label for="removeAnnotations">
+                                <input type="checkbox" id="removeAnnotations">
+                                Remove annotations
+                            </label>
+                        </div>
+                        
+                        <div class="option">
+                            <label for="compressOutput">
+                                <input type="checkbox" id="compressOutput" checked>
+                                Compress output
+                            </label>
+                        </div>
+                        
+                        <div class="option">
+                            <label for="addBookmarks">
+                                <input type="checkbox" id="addBookmarks" checked>
+                                Add bookmarks
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="controls">
+                        <button class="btn" id="sortBtn" disabled>
+                            <i class="fas fa-sort"></i> Sort PDFs
+                        </button>
+                        <button class="btn" id="mergeBtn" disabled>
+                            <i class="fas fa-merge"></i> Merge PDFs
+                        </button>
+                        <button class="btn btn-secondary" id="clearBtn" disabled>
+                            <i class="fas fa-trash-alt"></i> Clear All
+                        </button>
+                    </div>
+
+                    <div class="loading hidden" id="loading">
+                        <div class="spinner"></div>
+                        <p>Merging PDFs... This may take a moment</p>
+                        <p><small id="loadingStatus">Processing files...</small></p>
+                    </div>
+
+                    <div class="stats hidden" id="stats">
+                        <div class="stat-item">
+                            <div class="stat-value" id="pdfCount">0</div>
+                            <div class="stat-label">PDF Files</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="totalPages">0</div>
+                            <div class="stat-label">Total Pages</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="totalSize">0 MB</div>
+                            <div class="stat-label">Total Size</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="status">Ready</div>
+                            <div class="stat-label">Status</div>
+                        </div>
+                    </div>
+
+                    <div class="preview-section hidden" id="previewSection">
+                        <div class="preview-header">
+                            <h3>PDF Preview & Order</h3>
+                            <div>
+                                <button class="btn btn-success" id="downloadBtn" disabled>
+                                    <i class="fas fa-download"></i> Download Merged PDF
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="preview-container sortable" id="previewContainer">
+                            <!-- PDF previews will be inserted here -->
+                        </div>
+                        
+                        <div class="preview-actions">
+                            <button class="btn" id="removeAllBtn" disabled>
+                                <i class="fas fa-times"></i> Remove All
+                            </button>
+                            <button class="btn btn-secondary" id="reorderBtn" disabled>
+                                <i class="fas fa-random"></i> Apply Order
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-object-group"></i>
+                    </div>
+                    <h3>Multiple PDF Support</h3>
+                    <p>Combine unlimited PDF files into a single document while preserving quality and formatting.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-sort-numeric-down"></i>
+                    </div>
+                    <h3>Drag & Drop Ordering</h3>
+                    <p>Easily reorder PDF files and individual pages before merging with intuitive drag and drop.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Secure Processing</h3>
+                    <p>All merging happens in your browser. Your files never leave your computer for maximum privacy.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- Footer will be loaded here -->
+    <div id="footer-container"></div>
+
+    <!-- PDF-Lib for PDF manipulation -->
+    <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+    <!-- Sortable for drag and drop -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
+    
+    <!-- Load components -->
+    <script>
+        // Load navigation
+        fetch('../components/navigation.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('navigation-container').innerHTML = data;
+                // Set active link for merge-pdf page
+                const currentPage = window.location.pathname;
+                if (currentPage.includes('merge-pdf')) {
+                    const links = document.querySelectorAll('.nav-link');
+                    links.forEach(link => {
+                        if (link.href.includes('merge-pdf')) {
+                            link.classList.add('active');
+                        }
+                    });
+                }
+            })
+            .catch(error => console.error('Error loading navigation:', error));
+        
+        // Load footer
+        fetch('../components/footer.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('footer-container').innerHTML = data;
+            })
+            .catch(error => console.error('Error loading footer:', error));
+    </script>
+    
+    <!-- Main JavaScript -->
+    <script src="merge-pdf.js" defer></script>
+</body>
+</html>
