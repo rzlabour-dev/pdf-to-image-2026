@@ -1353,3 +1353,84 @@ select {
     line-height: 1.6;
     margin: 0;
 }
+/* Add merge icon styling */
+.tool-icon .fa-merge,
+.feature-icon .fa-merge {
+    transform: rotate(90deg);
+}
+
+/* Improve preview items for PDFs */
+.preview-item .preview-img {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    font-size: 3rem;
+}
+
+/* Update button colors for merge tool */
+.btn-success {
+    background: var(--success);
+    color: white;
+}
+
+.btn-success:hover {
+    background: #3ab3d9;
+    transform: translateY(-2px);
+}
+
+/* Add margin for merge button */
+#mergeBtn {
+    margin: 0 5px;
+}
+
+/* Improve sort button state */
+.sortable-ghost {
+    opacity: 0.4;
+    background: var(--light-gray);
+    border: 2px dashed var(--primary);
+}
+
+/* Update footer links for tools folder */
+.nav-link[href*="tools/"] {
+    position: relative;
+}
+
+/* Add tool-specific styles */
+.tool-specific {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Improve mobile responsiveness for tools */
+@media (max-width: 768px) {
+    .tool-card {
+        margin-bottom: 20px;
+    }
+    
+    .preview-container {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+}
+
+@media (max-width: 480px) {
+    .preview-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .option-group {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .option {
+        margin-bottom: 10px;
+        width: 100%;
+    }
+    
+    .option select {
+        width: 100%;
+        max-width: 100%;
+    }
+}
