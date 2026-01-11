@@ -6,9 +6,9 @@
         <span>PDF Tools Pro</span>
     </a>
     
-    <div class="nav-toggle" id="navToggle">
+    <button class="nav-toggle" id="navToggle">
         <i class="fas fa-bars"></i>
-    </div>
+    </button>
     
     <ul class="nav-menu" id="navMenu">
         <li><a href="index.html" class="nav-link">
@@ -26,7 +26,7 @@
                     <i class="fas fa-file-image"></i> Images to PDF
                 </a>
                 <a href="tools/merge-pdf.html" class="dropdown-item">
-                    <i class="fas fa-file-image"></i> Merge PDF
+                    <i class="fas fa-merge"></i> Merge PDF
                 </a>
             </div>
         </li>
@@ -45,8 +45,11 @@
     </ul>
     
     <div class="nav-actions">
-        <a href="https://github.com" target="_blank" class="github-btn">
+        <a href="https://github.com" target="_blank" class="github-btn" rel="noopener noreferrer">
             <i class="fab fa-github"></i> Star
+        </a>
+        <a href="https://github.com" target="_blank" class="github-btn mobile-only" rel="noopener noreferrer" style="display: none;">
+            <i class="fab fa-github"></i>
         </a>
     </div>
 </nav>
@@ -56,32 +59,120 @@
     document.addEventListener('DOMContentLoaded', function() {
         const navToggle = document.getElementById('navToggle');
         const navMenu = document.getElementById('navMenu');
+        const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
         
+        // Toggle main navigation
         if (navToggle && navMenu) {
-            navToggle.addEventListener('click', function() {
+            navToggle.addEventListener('click', function(e) {
+                e.stopPropagation();
                 navMenu.classList.toggle('active');
-                navToggle.classList.toggle('active');
+                navToggle.querySelector('i').className = navMenu.classList.contains('active') 
+                    ? 'fas fa-times' 
+                    : 'fas fa-bars';
             });
             
-            // Close dropdowns when clicking outside
+            // Close navigation when clicking outside
             document.addEventListener('click', function(e) {
                 if (!navToggle.contains(e.target) && !navMenu.contains(e.target)) {
                     navMenu.classList.remove('active');
-                    navToggle.classList.remove('active');
+                    navToggle.querySelector('i').className = 'fas fa-bars';
+                    // Also close all dropdowns
+                    document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('active'));
                 }
             });
         }
         
-        // Set active link based on current page
-        const currentPage = window.location.pathname.split('/').pop();
-        const navLinks = document.querySelectorAll('.nav-link');
+        // Handle dropdown toggles for mobile
+        dropdownToggles.forEach(toggle => {
+            toggle.addEventListener('click', function(e) {
+                if (window.innerWidth <= 768) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const dropdown = this.parentElement;
+                    dropdown.classList.toggle('active');
+                    
+                    // Close other dropdowns
+                    document.querySelectorAll('.dropdown').forEach(d => {
+                        if (d !== dropdown) {
+                            d.classList.remove('active');
+                        }
+                    });
+                }
+            });
+        });
         
+        // Set active link based on current page
+        const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+        const navLinks = document.querySelectorAll('.nav-link');
+        const dropdownItems = document.querySelectorAll('.dropdown-item');
+        
+        // Function to check if link is active
+        function isActiveLink(linkHref, currentPage) {
+            if (linkHref === currentPage) return true;
+            if (currentPage === 'index.html' && (linkHref === '' || linkHref === 'index.html')) return true;
+            if (currentPage === '' && linkHref === 'index.html') return true;
+            
+            // Check for tool pages
+            const toolPages = ['pdf-to-images.html', 'image-to-pdf.html', 'merge-pdf.html'];
+            for (const toolPage of toolPages) {
+                if (currentPage.includes(toolPage) && linkHref.includes(toolPage)) return true;
+            }
+            
+            return false;
+        }
+        
+        // Set active state for main nav links
         navLinks.forEach(link => {
             const linkHref = link.getAttribute('href');
-            if (linkHref === currentPage || 
-                (currentPage === '' && linkHref === 'index.html') ||
-                (currentPage.includes('index') && linkHref === 'index.html')) {
+            if (isActiveLink(linkHref, currentPage)) {
                 link.classList.add('active');
+                
+                // If this is a dropdown toggle, also activate parent dropdown
+                if (link.classList.contains('dropdown-toggle')) {
+                    link.parentElement.classList.add('active');
+                }
+            }
+        });
+        
+        // Set active state for dropdown items
+        dropdownItems.forEach(item => {
+            const itemHref = item.getAttribute('href');
+            if (isActiveLink(itemHref, currentPage)) {
+                item.classList.add('active');
+                
+                // Also activate parent dropdown and its toggle
+                const dropdown = item.closest('.dropdown');
+                if (dropdown) {
+                    dropdown.classList.add('active');
+                    const toggle = dropdown.querySelector('.dropdown-toggle');
+                    if (toggle) toggle.classList.add('active');
+                }
+            }
+        });
+        
+        // Show/hide mobile GitHub button
+        function updateMobileButtons() {
+            const mobileBtn = document.querySelector('.mobile-only');
+            if (window.innerWidth <= 768) {
+                mobileBtn.style.display = 'inline-flex';
+                document.querySelector('.github-btn:not(.mobile-only)').style.display = 'none';
+            } else {
+                mobileBtn.style.display = 'none';
+                document.querySelector('.github-btn:not(.mobile-only)').style.display = 'inline-flex';
+            }
+        }
+        
+        updateMobileButtons();
+        window.addEventListener('resize', updateMobileButtons);
+        
+        // Handle keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                navMenu.classList.remove('active');
+                document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('active'));
+                if (navToggle) {
+                    navToggle.querySelector('i').className = 'fas fa-bars';
+                }
             }
         });
     });
