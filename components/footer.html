@@ -7,47 +7,106 @@
                 </div>
                 <div class="footer-brand">
                     <h3>PDF Tools Pro</h3>
-                    <p>Free, secure PDF tools that work in your browser</p>
+                    <p>Free, secure PDF tools that work entirely in your browser</p>
+                    <p style="font-size: 0.9rem; color: rgba(255, 255, 255, 0.6); margin-top: 5px;">
+                        <i class="fas fa-shield-alt"></i> No uploads • Client-side only
+                    </p>
                 </div>
             </div>
             
             <div class="footer-links">
                 <div class="link-group">
                     <h4>Tools</h4>
-                    <a href="pdf-to-images.html">PDF to Images</a>
-                    <a href="image-to-pdf.html">Images to PDF</a>
+                    <a href="pdf-to-images.html">
+                        <i class="fas fa-file-pdf"></i> PDF to Images
+                    </a>
+                    <a href="image-to-pdf.html">
+                        <i class="fas fa-file-image"></i> Images to PDF
+                    </a>
+                    <a href="tools/merge-pdf.html">
+                        <i class="fas fa-merge"></i> Merge PDF
+                    </a>
                 </div>
                 <div class="link-group">
                     <h4>Legal</h4>
-                    <a href="privacy.html">Privacy Policy</a>
-                    <a href="terms.html">Terms of Service</a>
+                    <a href="privacy.html">
+                        <i class="fas fa-shield-alt"></i> Privacy Policy
+                    </a>
+                    <a href="terms.html">
+                        <i class="fas fa-file-contract"></i> Terms of Service
+                    </a>
+                    <a href="disclaimer.html">
+                        <i class="fas fa-exclamation-triangle"></i> Disclaimer
+                    </a>
                 </div>
                 <div class="link-group">
                     <h4>Company</h4>
-                    <a href="about.html">About Us</a>
-                    <a href="contact.html">Contact</a>
+                    <a href="about.html">
+                        <i class="fas fa-info-circle"></i> About Us
+                    </a>
+                    <a href="contact.html">
+                        <i class="fas fa-envelope"></i> Contact
+                    </a>
+                    <a href="changelog.html">
+                        <i class="fas fa-history"></i> Changelog
+                    </a>
+                </div>
+                <div class="link-group">
+                    <h4>Resources</h4>
+                    <a href="faq.html">
+                        <i class="fas fa-question-circle"></i> FAQ
+                    </a>
+                    <a href="blog.html">
+                        <i class="fas fa-blog"></i> Blog
+                    </a>
+                    <a href="https://github.com" target="_blank" rel="noopener noreferrer">
+                        <i class="fab fa-github"></i> GitHub
+                    </a>
                 </div>
             </div>
         </div>
         
         <div class="footer-bottom">
             <div class="footer-tech">
-                <p>Built with <i class="fas fa-heart" style="color: #f72585;"></i> using HTML, CSS & JavaScript</p>
-                <p>Compatible with Vercel, GitHub Pages & Netlify</p>
+                <p>
+                    <i class="fas fa-code"></i> Built with 
+                    <i class="fas fa-heart" style="color: #f72585;"></i> 
+                    using modern web technologies
+                </p>
+                <p>
+                    <i class="fas fa-plug"></i> Powered by: 
+                    <span class="tech-tag">PDF.js</span>
+                    <span class="tech-tag">jsPDF</span>
+                    <span class="tech-tag">PDF-Lib</span>
+                    <span class="tech-tag">JSZip</span>
+                </p>
             </div>
             
             <div class="footer-actions">
-                <a href="https://github.com" target="_blank" class="github-link">
-                    <i class="fab fa-github"></i> View on GitHub
+                <a href="https://github.com" target="_blank" class="github-link" rel="noopener noreferrer">
+                    <i class="fab fa-github"></i> Star on GitHub
+                </a>
+                <a href="https://github.com/issues" target="_blank" class="github-link" rel="noopener noreferrer">
+                    <i class="fas fa-bug"></i> Report Issue
                 </a>
                 <a href="#" id="resetApp" class="reset-link">
-                    <i class="fas fa-redo"></i> Reset Application
+                    <i class="fas fa-redo"></i> Reset Tool
+                </a>
+                <a href="#top" class="back-to-top">
+                    <i class="fas fa-arrow-up"></i> Back to Top
                 </a>
             </div>
             
             <div class="footer-copyright">
                 <p>&copy; <span id="currentYear">2023</span> PDF Tools Pro. All rights reserved.</p>
-                <p class="disclaimer">Uses pdf.js for PDF processing and JSZip for ZIP creation. All processing happens locally in your browser.</p>
+                <p class="disclaimer">
+                    <i class="fas fa-lock"></i> 
+                    All processing happens 100% in your browser. No files are uploaded to any server.
+                </p>
+                <p class="disclaimer" style="font-size: 0.8rem;">
+                    <i class="fas fa-exclamation-circle"></i> 
+                    This tool is for personal use only. Not responsible for any data loss or misuse.
+                </p>
             </div>
         </div>
     </div>
@@ -60,14 +119,91 @@
     // Reset app functionality
     document.getElementById('resetApp')?.addEventListener('click', function(e) {
         e.preventDefault();
-        if (typeof resetApp === 'function') {
-            resetApp();
-        } else if (window.location.pathname.includes('pdf-to-images')) {
-            window.location.href = 'pdf-to-images.html';
-        } else if (window.location.pathname.includes('image-to-pdf')) {
-            window.location.href = 'image-to-pdf.html';
+        
+        // Check if we're on a specific tool page
+        const currentPage = window.location.pathname;
+        const toolName = getCurrentToolName();
+        
+        if (toolName) {
+            if (confirm(`Reset all files and settings for ${toolName}?`)) {
+                // Try to call the tool's reset function if it exists
+                if (typeof resetApp === 'function') {
+                    resetApp();
+                } else {
+                    window.location.reload();
+                }
+            }
         } else {
             window.location.reload();
         }
+    });
+    
+    // Back to top functionality
+    document.querySelector('.back-to-top')?.addEventListener('click', function(e) {
+        e.preventDefault();
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+    
+    // Helper function to get current tool name
+    function getCurrentToolName() {
+        const path = window.location.pathname;
+        if (path.includes('pdf-to-images')) return 'PDF to Images';
+        if (path.includes('image-to-pdf')) return 'Images to PDF';
+        if (path.includes('merge-pdf')) return 'Merge PDF';
+        return null;
+    }
+    
+    // Add tech tag styling dynamically
+    document.addEventListener('DOMContentLoaded', function() {
+        const style = document.createElement('style');
+        style.textContent = `
+            .tech-tag {
+                display: inline-block;
+                background: rgba(255, 255, 255, 0.1);
+                color: white;
+                padding: 2px 8px;
+                margin: 0 5px;
+                border-radius: 12px;
+                font-size: 0.8rem;
+                font-family: monospace;
+                border: 1px solid rgba(255, 255, 255, 0.2);
+            }
+            
+            .tech-tag:hover {
+                background: rgba(255, 255, 255, 0.2);
+                transform: translateY(-1px);
+            }
+            
+            .back-to-top {
+                background: rgba(67, 97, 238, 0.2);
+                color: var(--primary);
+            }
+            
+            .back-to-top:hover {
+                background: rgba(67, 97, 238, 0.3);
+                color: white;
+            }
+            
+            @media (max-width: 768px) {
+                .footer-actions {
+                    flex-direction: column;
+                    align-items: center;
+                }
+                
+                .footer-actions a {
+                    width: 100%;
+                    max-width: 300px;
+                    justify-content: center;
+                }
+                
+                .footer-tech p {
+                    text-align: center;
+                }
+            }
+        `;
+        document.head.appendChild(style);
     });
 </script>
