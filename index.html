@@ -42,12 +42,39 @@
                     <div class="btn" style="margin-top: 20px;">Use Tool</div>
                 </a>
                 
+                <a href="tools/merge-pdf.html" class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-merge"></i>
+                    </div>
+                    <h3>Merge PDF Files</h3>
+                    <p>Combine multiple PDF documents into one single file. Reorder pages and customize the output.</p>
+                    <div class="btn" style="margin-top: 20px;">Use Tool</div>
+                </a>
+                
                 <a href="#" class="tool-card">
                     <div class="tool-icon">
                         <i class="fas fa-compress"></i>
                     </div>
                     <h3>PDF Compressor</h3>
                     <p>Reduce PDF file size without losing quality. Optimize PDFs for web sharing and email attachments.</p>
+                    <div class="btn" style="margin-top: 20px;">Coming Soon</div>
+                </a>
+                
+                <a href="#" class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <h3>PDF Protect</h3>
+                    <p>Add password protection to your PDF files. Set permissions and secure sensitive documents.</p>
+                    <div class="btn" style="margin-top: 20px;">Coming Soon</div>
+                </a>
+                
+                <a href="#" class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-unlock"></i>
+                    </div>
+                    <h3>PDF Unlock</h3>
+                    <p>Remove password protection from PDF files when you have the correct password.</p>
                     <div class="btn" style="margin-top: 20px;">Coming Soon</div>
                 </a>
             </div>
@@ -76,6 +103,33 @@
                     <h3>Cross-Platform</h3>
                     <p>Works on Windows, Mac, Linux, iOS, and Android. No installation required.</p>
                 </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-sync-alt"></i>
+                    </div>
+                    <h3>No Limits</h3>
+                    <p>Process unlimited files for free. No registration, no watermarks, no restrictions.</p>
+                </div>
+            </div>
+            
+            <div class="stats" style="margin-top: 60px;">
+                <div class="stat-item">
+                    <div class="stat-value">3+</div>
+                    <div class="stat-label">PDF Tools</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">100%</div>
+                    <div class="stat-label">Client-Side</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">∞</div>
+                    <div class="stat-label">Unlimited Use</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">0</div>
+                    <div class="stat-label">Uploads</div>
+                </div>
             </div>
         </main>
     </div>
@@ -85,19 +139,59 @@
     <script>
         // Load navigation
         fetch('components/navigation.html')
-            .then(response => response.text())
+            .then(response => {
+                if (!response.ok) throw new Error('Network response was not ok');
+                return response.text();
+            })
             .then(data => {
                 document.getElementById('navigation-container').innerHTML = data;
                 // Update active link for home page
                 const links = document.querySelectorAll('.nav-link');
                 links.forEach(link => link.classList.remove('active'));
+                
+                // Set active for home if on index page
+                const currentPath = window.location.pathname;
+                if (currentPath.endsWith('index.html') || currentPath.endsWith('/')) {
+                    links.forEach(link => {
+                        if (link.href.includes('index.html') || link.getAttribute('href') === '/') {
+                            link.classList.add('active');
+                        }
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error loading navigation:', error);
+                // Fallback navigation
+                document.getElementById('navigation-container').innerHTML = `
+                    <nav class="navbar">
+                        <a href="/" class="nav-brand">
+                            <div class="logo-icon"><i class="fas fa-tools"></i></div>
+                            PDF Tools Pro
+                        </a>
+                    </nav>`;
             });
         
         // Load footer
         fetch('components/footer.html')
-            .then(response => response.text())
+            .then(response => {
+                if (!response.ok) throw new Error('Network response was not ok');
+                return response.text();
+            })
             .then(data => {
                 document.getElementById('footer-container').innerHTML = data;
+            })
+            .catch(error => {
+                console.error('Error loading footer:', error);
+                // Fallback footer
+                document.getElementById('footer-container').innerHTML = `
+                    <footer class="footer">
+                        <div class="footer-content">
+                            <div class="footer-copyright">
+                                <p>© ${new Date().getFullYear()} PDF Tools Pro. All rights reserved.</p>
+                                <p class="disclaimer">All tools work 100% in your browser. No files are uploaded to any server.</p>
+                            </div>
+                        </div>
+                    </footer>`;
             });
     </script>
 </body>
